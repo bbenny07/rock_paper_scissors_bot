@@ -2,11 +2,22 @@ import asyncio
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.types import BotCommand
 from config_data.config import Config, load_config
 from handlers import other_handlers, user_handlers
 
 # Инициализируем логгер
 logger = logging.getLogger(__name__)
+
+async def set_main_menu(bot: Bot):
+    # Создаем список с командами и их описанием для кнопки menu
+    main_menu_commands = [
+        BotCommand(command='/start',
+                   description='Запустить бота'),
+        BotCommand(command='/help',
+                   description='Помощь по работе с ботом')]
+
+    await bot.set_my_commands(main_menu_commands)
 
 # Функция конфигурирования и запуска бота
 async def main():
@@ -22,6 +33,8 @@ async def main():
 
     bot: Bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
     dp: Dispatcher = Dispatcher()
+
+    dp.startup.register(set_main_menu)
 
     dp.include_router(user_handlers.router)
     dp.include_router(other_handlers.router)
