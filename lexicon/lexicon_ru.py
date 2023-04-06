@@ -26,3 +26,4 @@ LEXICON_RU: dict[str, str] = {
 LEXICON_COMMANDS_RU: dict[str, str] = {
                 '/start': 'Запустить бота',
                 '/help': 'Помощь по работе с ботом'}
+                #'/delmenu': 'Удалить меню'}
